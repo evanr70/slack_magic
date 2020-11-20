@@ -3,17 +3,39 @@ slack_magic
 ===========
 
 
-Add a short description here!
+`slack_magic` defines an IPython magic function to send notifications to a slack app when a process completes or fails.
 
 
 Description
 ===========
 
-A longer description of your project goes here...
+Install using `pip install slack_magic`
 
+Load the extension within Jupyter or IPython `%load_ext slack_magic`
 
-Note
-====
+The first time you run `%notify` it will ask for your slack app webhook url. After that it will be stored in `~/.slack_magic`.
 
-This project has been set up using PyScaffold 3.2.3. For details and usage
-information on PyScaffold see https://pyscaffold.org/.
+Use the magic as either a cell or a line magic:
+
+.. code-block:: python
+
+   %load_ext slack_magic
+   
+   # Send a confirmation that a line has run
+   %notify "Nothing wrong with this code"
+
+   # Send traceback to slack when an error is raised
+   %notify 1 / 0
+
+   # Send a confirmation that a cell has run
+   %%notify
+   "Nothing wrong with this code either"
+   a = 10
+   b = 144
+   
+   # Send traceback to slack when an error is raised in the cell
+   %%notify
+   "This won't fail"
+   "But the next line will"
+   1 / 0
+
